@@ -15,6 +15,10 @@
 
   <!-- Targets -->
 
+  <target name="lib" description="for emacs jdee">
+    <ivy:retrieve/>
+	</target>
+
   <target name="resolve" description="Retrieve dependencies with Ivy.">
     <ivy:resolve log="download-only"/>
     <ivy:cachepath conf="build" pathid="build.classpath"/>
