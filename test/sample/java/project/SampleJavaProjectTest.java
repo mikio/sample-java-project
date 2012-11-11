@@ -28,8 +28,8 @@ public class SampleJavaProjectTest {
      */
     @Test
     public final void testGetSet() {
-        sjp.setName("foo");
-        assertEquals("foo", sjp.getName());
+        sjp.setMessage("foo");
+        assertEquals("foo", sjp.getMessage());
     }
 
     /**
@@ -37,6 +37,6 @@ public class SampleJavaProjectTest {
      */
     @Test(expected=NullPointerException.class)
     public final void nullTest() {
-        sjp.setName(null);
+        sjp.setMessage(null);
     }
 }

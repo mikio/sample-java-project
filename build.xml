@@ -186,7 +186,8 @@
   </target>
 
   <target name="test" depends="test-compile" description="Run the unit tests.">
-    <junit fork="yes">
+		<junit fork="yes" forkmode="once">
+			<jvmarg value="-XX:-UseSplitVerifier" /> 
       <classpath>
         <pathelement path="${build.dir}/instrumented"/>
         <pathelement path="${build.dir}/classes"/>

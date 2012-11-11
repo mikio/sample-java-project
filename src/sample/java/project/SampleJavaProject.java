@@ -1,70 +1,41 @@
 package sample.java.project;
 
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.ParameterException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import org.apache.commons.lang.WordUtils;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.Options;
 
-/**
- * The main class of the application. It contains the main() method,
- * the first method called.
- */
-@NoArgsConstructor
-@AllArgsConstructor
-public class SampleJavaProject implements Runnable {
+public class SampleJavaProject {
 
-    /** The delay between printed messages. */
-    private static final long PRINT_DELAY = 1000L;
+    private String message = "";
 
-    /** The name to be printed in the output message. */
-    @Getter @Setter @NonNull
-    @Parameter(names = "--name", description = "set the user's name",
-               required = true)
-    private String name = "world";
-
-    /** Command line parameter for --loop. */
-    @Parameter(names = "--loop", description = "print endlessly, hotswap demo")
-    private boolean loop = false;
-
-    /** Command line parameter for --help. */
-    @Parameter(names = { "-h", "--help" }, description = "print help message")
-    private boolean help = false;
-
-    /**
-     * Print the "Hello, world!" string.
-     * @param args application input arguments
-     */
-    public static void main(final String[] args) {
-        /* Parse command line arguments. */
+    public static void main(String[] args) throws Exception {
+        Option msg = OptionBuilder.withArgName("msg")
+            .hasArg()
+            .withDescription("the message to capitalize")
+            .create("message");
+        Options options = new Options();
+        options.addOption(msg);
+        
+        CommandLineParser parser = new GnuParser();
+        CommandLine line = parser.parse(options, args);
+        
         SampleJavaProject sjp = new SampleJavaProject();
-        try {
-            JCommander jc = new JCommander(sjp, args);
-            if (sjp.help) {
-                jc.usage();
-                return;
-            }
-        } catch (ParameterException e) {
-            System.err.println("error: " + e.getMessage());
-            new JCommander(new SampleJavaProject()).usage();
-            System.exit(-1);
-        }
-
-        sjp.run();
+        sjp.setMessage(line.getOptionValue("message", "hello ivy !"));
+        System.out.println("standard message : " + sjp.getMessage());
+        System.out.println("capitalized by " + WordUtils.class.getName() 
+            + " : " + WordUtils.capitalizeFully(sjp.getMessage()));
+    }
+    
+    String getMessage() {
+        return message;
     }
 
-    @Override
-    public final void run() {
-        do {
-            System.out.printf("Hello, %s!%n", name);
-            try {
-                Thread.sleep(PRINT_DELAY);
-            } catch (InterruptedException e) {
-                return;
-            }
-        } while (loop);
+    void setMessage(String msg) {
+        if (msg == null) throw new NullPointerException();
+        message = msg;
     }
 }
