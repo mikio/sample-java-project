@@ -12,6 +12,7 @@
   <property name="test.dir" value="test"/>
   <property name="build.dir" value="build"/>
   <property name="dist.dir" value="dist"/>
+  <property name="lib.dir" value="lib"/>
 
   <!-- Targets -->
 
@@ -61,8 +62,8 @@
   <target name="run" depends="compile" description="Run the application.">
     <java classname="${main.class}" classpath="${build.dir}/classes" fork="yes">
       <classpath refid="runtime.classpath"/>
-      <arg value="--name"/>
-      <arg value="Java"/>
+      <arg value="--message"/>
+      <arg value="Hello! JDEE"/>
     </java>
   </target>
 
@@ -90,6 +91,7 @@
   <target name="clean" description="Delete all generated files.">
     <delete dir="${build.dir}"/>
     <delete dir="${dist.dir}"/>
+    <delete dir="${lib.dir}"/>
     <delete file="cache.properties"/>
   </target>
 

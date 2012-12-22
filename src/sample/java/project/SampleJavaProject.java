@@ -8,19 +8,22 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.CommandLineParser;
 
-
 public class SampleJavaProject {
 
     private String message = "";
 
     public static void main(String[] args) throws Exception {
-        OptionBuilder.withArgName("msg");
-        OptionBuilder.hasArg();
-        OptionBuilder.withDescription("the message to capitalize");
-        Option msg = OptionBuilder.create("message");
         Options options = new Options();
+
+        // コマンドオプションの定義
+        OptionBuilder.withArgName("message"); // 引数の名前
+        OptionBuilder.withLongOpt("message"); //長いオプション。--message
+        OptionBuilder.hasArg(); // 引数をひとつ取るという意味
+        OptionBuilder.withDescription("the message to capitalize");
+        Option msg = OptionBuilder.create("m"); // 短かいオプション名を"-m"としてオプション生成
+
         options.addOption(msg);
-        
+
         CommandLineParser parser = new GnuParser();
         CommandLine line = parser.parse(options, args);
         
