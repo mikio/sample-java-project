@@ -5,18 +5,19 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.CommandLineParser;
+
 
 public class SampleJavaProject {
 
     private String message = "";
 
     public static void main(String[] args) throws Exception {
-        Option msg = OptionBuilder.withArgName("msg")
-            .hasArg()
-            .withDescription("the message to capitalize")
-            .create("message");
+        OptionBuilder.withArgName("msg");
+        OptionBuilder.hasArg();
+        OptionBuilder.withDescription("the message to capitalize");
+        Option msg = OptionBuilder.create("message");
         Options options = new Options();
         options.addOption(msg);
         
